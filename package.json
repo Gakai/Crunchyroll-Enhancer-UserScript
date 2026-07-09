@@ -1,0 +1,44 @@
+{
+    "name": "crunchyroll-enhancer",
+    "version": "0.1.0",
+    "description": "Enhancements for Crunchyroll",
+    "author": "Gakai",
+    "license": "MIT",
+    "type": "module",
+    "userscript": {
+        "namespace": "https://github.com/Gakai/crunchyroll-enhancer",
+        "match": [
+            "*://*.crunchyroll.com/*"
+        ],
+        "grant": [
+            "none"
+        ],
+        "run-at": "document-idle"
+    },
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "rollup -c --configPlugin @rollup/plugin-typescript --bundleConfigAsCjs",
+        "watch": "rollup -c -w --configPlugin @rollup/plugin-typescript --bundleConfigAsCjs",
+        "check": "tsc --noEmit",
+        "format": "prettier --write .",
+        "format:check": "prettier --check ."
+    },
+    "devDependencies": {
+        "@rollup/plugin-terser": "^1.0.0",
+        "@rollup/plugin-typescript": "^12.3.0",
+        "@total-typescript/ts-reset": "^0.6.1",
+        "@types/node": "^26.1.0",
+        "@types/tampermonkey": "^5.0.5",
+        "prettier": "^3.9.4",
+        "rollup": "^4.62.2",
+        "tslib": "^2.8.1",
+        "typescript": "^6.0.3"
+    },
+    "devEngines": {
+        "packageManager": {
+            "name": "pnpm",
+            "version": "^11.10.0",
+            "onFail": "download"
+        }
+    }
+}
