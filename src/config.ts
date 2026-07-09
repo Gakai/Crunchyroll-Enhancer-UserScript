@@ -2,15 +2,20 @@ export const CARD_SELECTOR = ".erc-my-lists-item";
 export const CARD_TITLE_SELECTOR = ".watchlist-card-title--o1sAO";
 export const CARD_SUBTITLE_SELECTOR = ".watchlist-card-subtitle--IROsU";
 
-type StyleAndTexts = {
-    style: Partial<CSSStyleDeclaration>;
-    texts: Record<string, Array<string>>;
+export type Language = "en" | "de" | "fr" | "it" | "es";
+export type Target = "card" | "subtitle";
+
+export type StyleAndTexts = {
+    styles: Partial<Record<Target, Partial<CSSStyleDeclaration>>>;
+    texts: Record<Language, Array<string>>;
 };
 
 // cSpell:disable
 export const READY: StyleAndTexts = {
-    style: {
-        color: "red",
+    styles: {
+        subtitle: {
+            color: "red",
+        },
     },
     texts: {
         en: ["Up Next:", "Start Watching"],
@@ -18,12 +23,14 @@ export const READY: StyleAndTexts = {
         fr: ["À suivre:", "Lecture"],
         it: ["Successivo:", "Inizia a guardare"],
         es: ["Siguiente:", "Comenzar a ver"],
-    },
+    } as const,
 };
 
 export const CONTINUE: StyleAndTexts = {
-    style: {
-        color: "orange",
+    styles: {
+        subtitle: {
+            color: "orange",
+        },
     },
     texts: {
         en: ["Continue:"],
@@ -35,8 +42,10 @@ export const CONTINUE: StyleAndTexts = {
 };
 
 export const FINISHED: StyleAndTexts = {
-    style: {
-        opacity: "0.3",
+    styles: {
+        card: {
+            opacity: "0.3",
+        },
     },
     texts: {
         en: ["Watch Again:", "Up Next: E0"],

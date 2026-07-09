@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         Crunchyroll Enhancer
 // @namespace    https://github.com/Gakai/Crunchyroll-Enhancer-UserScript
-// @version      0.1.0
+// @version      0.2.0
 // @description  Enhancements for Crunchyroll
 // @author       Gakai
 // @downloadURL  https://raw.githubusercontent.com/Gakai/Crunchyroll-Enhancer-UserScript/main/dist/crunchyroll-enhancer.user.js
 // @updateURL    https://raw.githubusercontent.com/Gakai/Crunchyroll-Enhancer-UserScript/main/dist/crunchyroll-enhancer.user.js
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=crunchyroll.com
 // @match        *://*.crunchyroll.com/*
 // @grant        none
 // @run-at       document-idle
@@ -17,8 +18,10 @@
     const CARD_SUBTITLE_SELECTOR = ".watchlist-card-subtitle--IROsU";
     // cSpell:disable
     const READY = {
-        style: {
-            color: "red",
+        styles: {
+            subtitle: {
+                color: "red",
+            },
         },
         texts: {
             en: ["Up Next:", "Start Watching"],
@@ -28,9 +31,25 @@
             es: ["Siguiente:", "Comenzar a ver"],
         },
     };
+    const CONTINUE = {
+        styles: {
+            subtitle: {
+                color: "orange",
+            },
+        },
+        texts: {
+            en: ["Continue:"],
+            de: ["Fortsetzen:"],
+            fr: ["Reprendre:"],
+            it: ["Continua:"],
+            es: ["Continuar:"],
+        },
+    };
     const FINISHED = {
-        style: {
-            opacity: "0.3",
+        styles: {
+            card: {
+                opacity: "0.3",
+            },
         },
         texts: {
             en: ["Watch Again:", "Up Next: E0"],
@@ -110,6 +129,12 @@
         }
     }
 
+    // Order matters: we want to style the most specific state first
+    const STATE = {
+        CONTINUE,
+        FINISHED,
+        READY,
+    };
     function getLanguage() {
         const language = navigator.language.split("-")[0];
         if (language && language in READY.texts) {
@@ -117,11 +142,18 @@
         }
         return "en";
     }
-    function styleReady(card) {
-        Object.assign(card.style, READY.style);
+    function getState(subtitle, language) {
+        for (const state of Object.values(STATE)) {
+            const texts = state.texts[language];
+            if (texts?.some((t) => subtitle.textContent?.startsWith(t))) {
+                return state;
+            }
+        }
+        return undefined;
     }
-    function styleFinished(card) {
-        Object.assign(card.style, FINISHED.style);
+    function styleCard({ card, subtitle }, styles) {
+        card && Object.assign(card.style, styles.card);
+        subtitle && Object.assign(subtitle.style, styles.subtitle);
     }
     const language = getLanguage();
     const listener = new MutationListener(document.body, {
@@ -130,23 +162,15 @@
     });
     listener.on("added", (node) => {
         if (node instanceof HTMLElement) {
-            const cardSubtitles = node.querySelectorAll(CARD_SUBTITLE_SELECTOR);
-            for (const cardSubtitle of cardSubtitles) {
-                const card = cardSubtitle.closest(CARD_SELECTOR);
-                // Finished for now: should be dimmed
-                const finishedTexts = FINISHED.texts[language];
-                if (finishedTexts?.some((t) => cardSubtitle.textContent?.startsWith(t))) {
-                    if (card instanceof HTMLElement) {
-                        styleFinished(card);
-                    }
+            const subtitles = node.querySelectorAll(CARD_SUBTITLE_SELECTOR);
+            for (const subtitle of subtitles) {
+                const card = subtitle.closest(CARD_SELECTOR);
+                const state = getState(subtitle, language);
+                if (state &&
+                    card instanceof HTMLElement &&
+                    subtitle instanceof HTMLElement) {
+                    styleCard({ card, subtitle }, state.styles);
                     continue;
-                }
-                // Up Next / Start Watching: should be red
-                const readyTexts = READY.texts[language];
-                if (readyTexts?.some((t) => cardSubtitle.textContent?.startsWith(t))) {
-                    if (cardSubtitle instanceof HTMLElement) {
-                        styleReady(cardSubtitle);
-                    }
                 }
             }
         }

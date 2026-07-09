@@ -1,6 +1,6 @@
 {
     "name": "crunchyroll-enhancer",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "Enhancements for Crunchyroll",
     "author": "Gakai",
     "license": "MIT",
@@ -9,6 +9,7 @@
         "namespace": "https://github.com/Gakai/Crunchyroll-Enhancer-UserScript",
         "downloadURL": "https://raw.githubusercontent.com/Gakai/Crunchyroll-Enhancer-UserScript/main/dist/crunchyroll-enhancer.user.js",
         "updateURL": "https://raw.githubusercontent.com/Gakai/Crunchyroll-Enhancer-UserScript/main/dist/crunchyroll-enhancer.user.js",
+        "icon": "https://www.google.com/s2/favicons?sz=64&domain=crunchyroll.com",
         "match": [
             "*://*.crunchyroll.com/*"
         ],
@@ -28,12 +29,11 @@
     "devDependencies": {
         "@rollup/plugin-typescript": "^12.3.0",
         "@total-typescript/ts-reset": "^0.6.1",
-        "@types/node": "^26.1.0",
+        "@types/node": "^26.1.1",
         "@types/tampermonkey": "^5.0.5",
         "prettier": "^3.9.4",
         "rollup": "^4.62.2",
-        "tslib": "^2.8.1",
-        "typescript": "^6.0.3"
+        "tslib": "^2.8.1"
     },
     "devEngines": {
         "packageManager": {
@@ -41,5 +41,8 @@
             "version": "^11.10.0",
             "onFail": "download"
         }
+    },
+    "dependencies": {
+        "typescript": "^6.0.3"
     }
 }
