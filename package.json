@@ -6,7 +6,9 @@
     "license": "MIT",
     "type": "module",
     "userscript": {
-        "namespace": "https://github.com/Gakai/crunchyroll-enhancer",
+        "namespace": "https://github.com/Gakai/Crunchyroll-Enhancer-UserScript",
+        "downloadURL": "https://raw.githubusercontent.com/Gakai/Crunchyroll-Enhancer-UserScript/main/dist/crunchyroll-enhancer.user.js",
+        "updateURL": "https://raw.githubusercontent.com/Gakai/Crunchyroll-Enhancer-UserScript/main/dist/crunchyroll-enhancer.user.js",
         "match": [
             "*://*.crunchyroll.com/*"
         ],
@@ -24,7 +26,6 @@
         "format:check": "prettier --check ."
     },
     "devDependencies": {
-        "@rollup/plugin-terser": "^1.0.0",
         "@rollup/plugin-typescript": "^12.3.0",
         "@total-typescript/ts-reset": "^0.6.1",
         "@types/node": "^26.1.0",

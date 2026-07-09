@@ -1,4 +1,3 @@
-import terser from "@rollup/plugin-terser";
 import typescript from "@rollup/plugin-typescript";
 import { userscriptMetadata } from "./plugins/userscript-metadata.js";
 
@@ -12,7 +11,6 @@ export default {
     },
     plugins: [
         typescript({ tsconfig: "./tsconfig.json" }),
-        terser(),
         userscriptMetadata(),
     ],
 };
