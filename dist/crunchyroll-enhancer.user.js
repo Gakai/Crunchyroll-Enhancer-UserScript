@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Crunchyroll Enhancer
 // @namespace    https://github.com/Gakai/Crunchyroll-Enhancer-UserScript
-// @version      0.2.0
+// @version      0.3.0
 // @description  Enhancements for Crunchyroll
 // @author       Gakai
 // @downloadURL  https://raw.githubusercontent.com/Gakai/Crunchyroll-Enhancer-UserScript/main/dist/crunchyroll-enhancer.user.js
