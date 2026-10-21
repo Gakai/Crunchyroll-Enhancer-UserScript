@@ -7,7 +7,7 @@
         "module": "ESNext",
         "moduleResolution": "bundler",
         "lib": ["esnext", "dom"],
-        "types": ["node", "tampermonkey"],
+        "types": ["tampermonkey"],
 
         "noEmit": true,
 

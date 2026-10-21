@@ -16,6 +16,7 @@
 
     const CARD_SELECTOR = ".erc-my-lists-item";
     const CARD_SUBTITLE_SELECTOR = ".watchlist-card-subtitle--IROsU";
+    const CLOSING_CAROUSEL_X_SELECTOR = ".end-slate-carousel-close__icon--7lQUO";
     // cSpell:disable
     const READY = {
         styles: {
@@ -175,6 +176,39 @@
             }
         }
     });
+    const CAROUSEL_CLOSE_RETRY_INTERVAL_MS = 200;
+    const MAX_CAROUSEL_CLOSE_ATTEMPTS = 25;
+    let carouselCloseTimer;
+    function closeCarouselX(node) {
+        if (!(node instanceof HTMLElement))
+            return;
+        const xButton = node.matches(CLOSING_CAROUSEL_X_SELECTOR)
+            ? node
+            : node.querySelector(CLOSING_CAROUSEL_X_SELECTOR);
+        if (!xButton)
+            return;
+        xButton.click();
+        if (carouselCloseTimer)
+            return;
+        let attempts = 0;
+        const timer = setInterval(() => {
+            const currentXButton = document.querySelector(CLOSING_CAROUSEL_X_SELECTOR);
+            if (!currentXButton || attempts >= MAX_CAROUSEL_CLOSE_ATTEMPTS) {
+                clearInterval(timer);
+                carouselCloseTimer = undefined;
+                return;
+            }
+            attempts += 1;
+            currentXButton.click();
+        }, CAROUSEL_CLOSE_RETRY_INTERVAL_MS);
+        carouselCloseTimer = timer;
+    }
+    // Try to close existing carousels
+    document
+        .querySelectorAll(CLOSING_CAROUSEL_X_SELECTOR)
+        .forEach((xButton) => xButton.click());
+    // Try to close newly added carousels
+    listener.on("added", closeCarouselX);
     console.log("Crunchyroll Watchlist Enhancer loaded");
 
 })();

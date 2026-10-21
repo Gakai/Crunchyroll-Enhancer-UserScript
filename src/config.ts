@@ -2,6 +2,8 @@ export const CARD_SELECTOR = ".erc-my-lists-item";
 export const CARD_TITLE_SELECTOR = ".watchlist-card-title--o1sAO";
 export const CARD_SUBTITLE_SELECTOR = ".watchlist-card-subtitle--IROsU";
 
+export const CLOSING_CAROUSEL_X_SELECTOR = ".end-slate-carousel-close__icon--7lQUO";
+
 export type Language = "en" | "de" | "fr" | "it" | "es";
 export type Target = "card" | "subtitle";
 
