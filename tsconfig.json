@@ -30,5 +30,5 @@
         "moduleDetection": "force",
         "skipLibCheck": true
     },
-    "include": ["src/**/*", "plugins/**/*", "rollup.config.ts"]
+    "include": ["src/**/*", "plugins/**/*"]
 }

@@ -1,6 +1,4 @@
-import type { Plugin } from "rollup";
-
-import * as pkg from "../package.json" with { type: "json" };
+import pkg from "../package.json" with { type: "json" };
 
 type MetaValue = string | number | boolean | string[] | Record<string, boolean>;
 
@@ -98,21 +96,6 @@ function getMetadata(packageJson: typeof pkg): Array<[string, MetaValue]> {
     return entries;
 }
 
-export function userscriptMetadata(): Plugin {
-    let metadataComment = "";
-
-    return {
-        name: "userscript-metadata",
-
-        buildStart() {
-            metadataComment = formatMetadata(getMetadata(pkg));
-        },
-
-        renderChunk(code) {
-            if (code.includes(HEADER_START)) {
-                return null;
-            }
-            return { code: metadataComment + code, map: null };
-        },
-    };
+export function userscriptMetadata(): string {
+    return formatMetadata(getMetadata(pkg));
 }
