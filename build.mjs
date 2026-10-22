@@ -8,7 +8,7 @@ const options = {
     entryPoints: ["src/main.ts"],
     format: "iife",
     logLevel: "info",
-    minify: true,
+    minify: false, // required by Greasy Fork
     outfile: "dist/crunchyroll-enhancer.user.js",
     platform: "browser",
     sourcemap: true,
